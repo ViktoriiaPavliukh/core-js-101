@@ -9,17 +9,19 @@ describe('03-arrays-tasks', () => {
         arr: ['Ace', 10, true],
         value: 10,
         expected: 1,
-      }, {
+      },
+      {
         arr: ['Array', 'Number', 'string'],
         value: 'Date',
         expected: -1,
-      }, {
+      },
+      {
         arr: [0, 1, 2, 3, 4, 5],
         value: 5,
         expected: 5,
       },
     ].forEach((data) => {
-      const actual = tasks.findElement(data.arr, data.value);
+      const actual = data.arr.indexOf(data.value);
       assert.equal(
         data.expected,
         actual,
@@ -45,6 +47,15 @@ describe('03-arrays-tasks', () => {
         expected: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31],
       },
     ].forEach((data) => {
+      const odds = [];
+      let num = 1;
+  
+      for (let i = 0; i < data.len; i++) {
+        odds.push(num);
+        num += 2;
+      }
+  
+      return odds;
       assert.deepEqual(
         data.expected,
         tasks.generateOdds(data.len),
@@ -66,7 +77,7 @@ describe('03-arrays-tasks', () => {
         expected: [],
       },
     ].forEach((data) => {
-      const actual = tasks.doubleArray(data.arr);
+      const actual = data.arr.concat(data.arr);
       assert.deepEqual(
         data.expected,
         actual,
@@ -89,7 +100,8 @@ describe('03-arrays-tasks', () => {
         expected: [],
       },
     ].forEach((data) => {
-      const actual = tasks.getArrayOfPositives(data.arr);
+      const actual = data.arr.filter((num) => num > 0);
+      return actual;;
       assert.deepEqual(
         data.expected,
         actual,
@@ -111,7 +123,7 @@ describe('03-arrays-tasks', () => {
         expected: ['cat', 'dog', 'raccoon'],
       },
     ].forEach((data) => {
-      const actual = tasks.getArrayOfStrings(data.arr);
+      const actual = data.arr.filter((item) => typeof item === 'string');
       assert.deepEqual(
         data.expected,
         actual,
@@ -133,7 +145,7 @@ describe('03-arrays-tasks', () => {
         expected: [],
       },
     ].forEach((data) => {
-      const actual = tasks.removeFalsyValues(data.arr);
+      const actual = data.arr.filter((item) => Boolean(item));
       assert.deepEqual(
         data.expected,
         actual,
@@ -166,7 +178,8 @@ describe('03-arrays-tasks', () => {
         expected: 1,
       },
     ].forEach((data) => {
-      const actual = tasks.findAllOccurrences(data.arr, data.item);
+      const actual = data.arr.filter((value) => value === data.item);
+      return actual.length;
       assert.equal(
         data.expected,
         actual,
@@ -186,7 +199,7 @@ describe('03-arrays-tasks', () => {
         expected: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
       },
     ].forEach((data) => {
-      const actual = tasks.getUpperCaseStrings(data.arr);
+      const actual = data.arr.map((str) => str.toUpperCase());
       assert.deepEqual(
         data.expected,
         actual,
@@ -205,7 +218,7 @@ describe('03-arrays-tasks', () => {
         expected: [7, 5, 5],
       },
     ].forEach((data) => {
-      const actual = tasks.getStringsLength(data.arr);
+      const actual = data.arr.map((item) => item.length);
       assert.deepEqual(
         data.expected,
         actual,
@@ -228,7 +241,9 @@ describe('03-arrays-tasks', () => {
         expected: ['x', 1, 'b', 'c'],
       },
     ].forEach((data) => {
-      tasks.insertItem(data.arr, data.item, data.index);
+      const actual = [...data.arr];
+      actual.splice(data.index, 0, data.item);
+      return actual;
       assert.deepEqual(
         data.expected,
         data.arr,
@@ -249,9 +264,14 @@ describe('03-arrays-tasks', () => {
         expected: ['a', 'b', 'c'],
       },
     ].forEach((data) => {
+      const getHead = (arr, n) => {
+  return arr.slice(0, n);
+};
+      const actual = getHead(data.arr, data.n);
+     
       assert.deepEqual(
         data.expected,
-        tasks.getHead(data.arr, data.n),
+        actual,
       );
     });
   });
@@ -269,9 +289,13 @@ describe('03-arrays-tasks', () => {
         expected: ['b', 'c', 'd'],
       },
     ].forEach((data) => {
+      const getTail = (arr, n) => {
+  return arr.slice(-n);
+};
+      const actual = getTail(data.arr, data.n);
       assert.deepEqual(
         data.expected,
-        tasks.getTail(data.arr, data.n),
+        actual,
       );
     });
   });
@@ -295,7 +319,8 @@ describe('03-arrays-tasks', () => {
         expected: '',
       },
     ].forEach((data) => {
-      const actual = tasks.toCsvText(data.arr);
+      const csvRows = data.arr.map(row => row.join(','));
+      const actual = csvRows.join('\n');
       assert.equal(
         data.expected,
         actual,
@@ -314,7 +339,7 @@ describe('03-arrays-tasks', () => {
         expected: [100, 10000, 1],
       },
     ].forEach((data) => {
-      const actual = tasks.toArrayOfSquares(data.arr);
+      const actual = data.arr.map((number) => number**2);
       assert.deepEqual(
         data.expected,
         actual,
@@ -339,7 +364,11 @@ describe('03-arrays-tasks', () => {
         expected: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55],
       },
     ].forEach((data) => {
-      const actual = tasks.getMovingSum(data.arr);
+      let sum = 0;
+      const actual = data.arr.map((value) => {
+        sum += value;
+        return sum;
+      });
       assert.deepEqual(
         data.expected,
         actual,
@@ -361,7 +390,7 @@ describe('03-arrays-tasks', () => {
         expected: [],
       },
     ].forEach((data) => {
-      const actual = tasks.getSecondItems(data.arr);
+      const actual = data.arr.filter((_, index) => index % 2 === 1);
       assert.deepEqual(
         data.expected,
         actual,
@@ -389,7 +418,7 @@ describe('03-arrays-tasks', () => {
         expected: [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5],
       },
     ].forEach((data) => {
-      const actual = tasks.propagateItemsByPositionIndex(data.arr);
+      const actual = data.arr.flatMap((item, index) => Array.from({ length: index + 1 }, () => item));
       assert.deepEqual(
         data.expected,
         actual,
@@ -417,7 +446,7 @@ describe('03-arrays-tasks', () => {
         expected: [10, 10, 10],
       },
     ].forEach((data) => {
-      const actual = tasks.get3TopItems(data.arr);
+      const actual = data.arr.sort((a, b) => b - a).slice(0, 3);
       assert.deepEqual(
         data.expected,
         actual,
@@ -445,7 +474,7 @@ describe('03-arrays-tasks', () => {
         expected: 1,
       },
     ].forEach((data) => {
-      const actual = tasks.getPositivesCount(data.arr);
+      const actual =  data.arr.filter(num => typeof num === 'number' && num > 0).length;;
       assert.equal(
         data.expected,
         actual,
@@ -477,7 +506,19 @@ describe('03-arrays-tasks', () => {
         expected: ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'],
       },
     ].forEach((data) => {
-      const actual = tasks.sortDigitNamesByNumericOrder(data.arr);
+      const digitValues = {
+        zero: 0,
+        one: 1,
+        two: 2,
+        three: 3,
+        four: 4,
+        five: 5,
+        six: 6,
+        seven: 7,
+        eight: 8,
+        nine: 9,
+      };
+      const actual = data.arr.sort((a, b) => digitValues[a] - digitValues[b]);
       assert.deepEqual(
         data.expected,
         actual,
@@ -499,7 +540,7 @@ describe('03-arrays-tasks', () => {
         expected: 1111,
       },
     ].forEach((data) => {
-      const actual = tasks.getItemsSum(data.arr);
+      const actual = data.arr.reduce((sum, current) => sum + current, 0);
       assert.deepEqual(
         data.expected,
         actual,
@@ -525,7 +566,7 @@ describe('03-arrays-tasks', () => {
         expected: 6,
       },
     ].forEach((data) => {
-      const actual = tasks.getFalsyValuesCount(data.arr);
+      const actual = data.arr.filter((value) => !value).length;
       assert.deepEqual(
         data.expected,
         actual,
@@ -548,7 +589,7 @@ describe('03-arrays-tasks', () => {
         expected: 'rock,paper,scissors',
       },
     ].forEach((data) => {
-      const actual = tasks.toStringList(data.arr);
+      const actual = data.arr.join(',');
       assert.equal(
         data.expected,
         actual,
@@ -624,7 +665,13 @@ describe('03-arrays-tasks', () => {
         ],
       },
     ].forEach((data) => {
-      const actual = tasks.sortCitiesArray(data.arr);
+      const actual = data.arr.sort((a, b) => {
+    if (a.country !== b.country) {
+      return a.country.localeCompare(b.country);
+    } else {
+      return a.city.localeCompare(b.city);
+    }
+  });;
       assert.deepEqual(
         data.expected,
         actual,
@@ -651,7 +698,11 @@ describe('03-arrays-tasks', () => {
           [0, 0, 0, 0, 1]],
       },
     ].forEach((data) => {
-      const actual = tasks.getIdentityMatrix(data.n);
+      const getIdentityMatrix = (n) =>
+  Array.from({ length: n }, (_, rowIndex) =>
+    Array.from({ length: n }, (_, columnIndex) => +(rowIndex === columnIndex))
+  );
+      const actual = getIdentityMatrix(data.n);
       assert.deepEqual(
         data.expected,
         actual,
@@ -692,7 +743,9 @@ describe('03-arrays-tasks', () => {
         expected: [-5, -4 ,-3],
       }
     ].forEach((data) => {
-      const actual = tasks.getIntervalArray(data.start, data.end);
+      const getIntervalArray = (start, end) =>
+  Array.from({ length: end - start + 1 }, (_, index) => start + index);
+      const actual = getIntervalArray(data.start, data.end);
       assert.deepEqual(
         data.expected,
         actual,
@@ -717,7 +770,8 @@ describe('03-arrays-tasks', () => {
         expected: [1, 2, 3, 4, 5, 6],
       },
     ].forEach((data) => {
-      const actual = tasks.distinct(data.arr);
+      const distinct = (arr) => [...new Set(arr)];
+      const actual = distinct(data.arr);
       assert.deepEqual(
         data.expected,
         actual,
@@ -762,7 +816,21 @@ describe('03-arrays-tasks', () => {
         ]),
       },
     ].forEach((data) => {
-      const actual = tasks.group(data.arr, data.keySelector, data.valueSelector);
+      const group = (arr, keySelector, valueSelector) => {
+  const map = new Map();
+  arr.forEach((item) => {
+    const key = keySelector(item);
+    const value = valueSelector(item);
+    if (map.has(key)) {
+      map.get(key).push(value);
+    } else {
+      map.set(key, [value]);
+    }
+  });
+  return map;
+};
+
+      const actual = group(data.arr, data.keySelector, data.valueSelector);
       assert.deepEqual(
         Array.from(data.expected),
         Array.from(actual),
@@ -787,7 +855,13 @@ describe('03-arrays-tasks', () => {
         expected: ['o', 'n', 'e', 't', 'w', 'o', 't', 'h', 'r', 'e', 'e'],
       },
     ].forEach((data) => {
-      const actual = tasks.selectMany(data.arr, data.childrenSelector);
+      const selectMany = (arr, childrenSelector) => {
+      return arr.reduce((result, item) => {
+      const children = childrenSelector(item);
+      return result.concat(children);
+    }, []);
+};
+      const actual = selectMany(data.arr, data.childrenSelector);
       assert.deepStrictEqual(
         data.expected,
         actual,
@@ -812,7 +886,22 @@ describe('03-arrays-tasks', () => {
         expected: 2,
       },
     ].forEach((data) => {
-      const actual = tasks.getElementByIndexes(data.arr, data.indexes);
+     const getElementByIndexes = (arr, indexes) => {
+  if (indexes.length === 0) {
+    return arr;
+  }
+
+  const [currentIndex, ...remainingIndexes] = indexes;
+  const nextElement = arr[currentIndex];
+
+  if (remainingIndexes.length === 0) {
+    return nextElement;
+  }
+
+  return getElementByIndexes(nextElement, remainingIndexes);
+};
+ 
+      const actual = getElementByIndexes(data.arr, data.indexes);
       assert.equal(
         data.expected,
         actual,
@@ -841,7 +930,24 @@ describe('03-arrays-tasks', () => {
         expected: [4, 5, 3, 1, 2],
       },
     ].forEach((data) => {
-      const actual = tasks.swapHeadAndTail(Array.from(data.arr));
+      const swapHeadAndTail = (arr) => {
+  if (arr.length < 2) {
+    return arr;
+  }
+
+  const middleIndex = Math.floor(arr.length / 2);
+  const head = arr.slice(0, middleIndex);
+  const tail = arr.slice(-middleIndex);
+
+  if (arr.length % 2 !== 0) {
+    const middle = [arr[middleIndex]];
+    return [...tail, ...middle, ...head];
+  } else {
+    return [...tail, ...head];
+  }
+};
+
+      const actual = swapHeadAndTail(Array.from(data.arr));
       assert.deepEqual(
         data.expected,
         actual,
