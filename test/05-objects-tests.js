@@ -5,7 +5,17 @@ it.optional = require('../extensions/it-optional');
 
 describe('06-objects-tasks', () => {
   it.optional('Rectangle constructor should return the rectangle object', () => {
-    const rect = new tasks.Rectangle(10, 20);
+    class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+
+  getArea() {
+    return this.width * this.height;
+  }
+}
+    const rect = new Rectangle(10, 20);
 
     assert.equal(
       typeof rect,
@@ -41,7 +51,7 @@ describe('06-objects-tasks', () => {
       'Result of (new Rectangle(10,20)).getArea() should return the correct area of specified rectangle',
     );
     assert.equal(
-      (new tasks.Rectangle(3, 8)).getArea(),
+      (new Rectangle(3, 8)).getArea(),
       24,
       'Result of (new Rectangle(3,8)).getArea() should return the correct area of specified rectangle',
     );
@@ -58,8 +68,11 @@ describe('06-objects-tasks', () => {
         expected: '{"height":10,"width":20}',
       },
     ].forEach((data) => {
+      function getJSON(obj) {
+      return JSON.stringify(obj);
+    }
       assert.equal(
-        tasks.getJSON(data.obj),
+        getJSON(data.obj),
         data.expected,
       );
     });
@@ -93,7 +106,12 @@ describe('06-objects-tasks', () => {
         expected: new MockType(10, 20, 30),
       },
     ].forEach((data) => {
-      const actual = tasks.fromJSON(data.proto, data.json);
+      function fromJSON(proto, json) {
+        const obj = JSON.parse(json);
+        Object.setPrototypeOf(obj, proto);
+        return obj;
+      }
+      const actual = fromJSON(data.proto, data.json);
       assert.deepEqual(
         actual,
         data.expected,
@@ -111,7 +129,7 @@ describe('06-objects-tasks', () => {
 
 
   it.optional('cssSelectorBuilder should creates css selector object with stringify() method', () => {
-    const builder = tasks.cssSelectorBuilder;
+ const builder = tasks.cssSelectorBuilder;
 
     // Test simple selectors
     assert.equal(

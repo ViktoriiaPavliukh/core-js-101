@@ -157,8 +157,6 @@ describe('04-date-tasks', () => {
   return angle;
 }
 
-
-
       assert.equal(
         angleBetweenClockHands(new Date(data.date)),
         data.expected,
