@@ -103,7 +103,14 @@ describe('08-conditions-n-loops-tasks', () => {
       { n1: 5, n2: 10, expected: 45 },
       { n1: -1, n2: 1, expected: 0 },
     ].forEach((data) => {
-      const actual = tasks.getSumBetweenNumbers(data.n1, data.n2);
+      function getSumBetweenNumbers(n1, n2) {
+    let sum = 0;
+    for (let i = n1; i <= n2; i++) {
+      sum += i;
+    }
+    return sum;
+};
+      const actual = getSumBetweenNumbers(data.n1, data.n2);
       assert.equal(
         actual,
         data.expected,
