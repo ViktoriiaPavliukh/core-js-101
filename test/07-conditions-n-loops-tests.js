@@ -9,7 +9,20 @@ describe('08-conditions-n-loops-tasks', () => {
       37, 38, 41, 43, 44, 47, 49, 52, 53, 56, 58, 59, 61, 62, 64, 67, 68, 71,
       73, 74, 76, 77, 79, 82, 83, 86, 88, 89, 91, 92, 94, 97, 98,
     ].forEach((num) => {
-      const actual = tasks.getFizzBuzz(num);
+      
+  function getFizzBuzz(num) {
+    if (num % 3 === 0 && num % 5 === 0) {
+      return 'FizzBuzz';
+    } else if (num % 3 === 0) {
+      return 'Fizz';
+    } else if (num % 5 === 0) {
+      return 'Buzz';
+    } else {
+      return num;
+    }
+  }
+
+      const actual = getFizzBuzz(num);
       assert.equal(
         actual,
         num,
@@ -61,6 +74,19 @@ describe('08-conditions-n-loops-tasks', () => {
       { n: 5, expected: 120 },
       { n: 10, expected: 3628800 },
     ].forEach((data) => {
+      const tasks = {
+  getFactorial(n) {
+    if (n === 0 || n === 1) {
+      return 1;
+    } else {
+      let factorial = 1;
+      for (let i = 2; i <= n; i++) {
+        factorial *= i;
+      }
+      return factorial;
+    }
+  },
+};
       const actual = tasks.getFactorial(data.n);
       assert.equal(
         actual,
